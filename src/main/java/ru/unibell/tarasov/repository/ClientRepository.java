@@ -1,4 +1,4 @@
-package ru.unibell.tarasov.repositry;
+package ru.unibell.tarasov.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import ru.unibell.tarasov.entity.Client;

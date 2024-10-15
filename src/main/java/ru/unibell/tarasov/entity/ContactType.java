@@ -1,2 +1,6 @@
-package ru.unibell.tarasov.entity;public enum ContactType {
+package ru.unibell.tarasov.entity;
+
+public enum ContactType {
+    PHONE,
+    EMAIL
 }

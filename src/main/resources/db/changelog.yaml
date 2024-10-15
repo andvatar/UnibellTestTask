@@ -1,0 +1,148 @@
+databaseChangeLog:
+  - changeSet:
+      id: 1
+      author: AndreyTarasov
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            - tableExists:
+                tableName: client
+      changes:
+        - createTable:
+            tableName: client
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: last_name
+                  type: varchar2(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: first_name
+                  type: varchar2(100)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: patronymic
+                  type: varchar2(100)
+                  constraints:
+                    nullable: true
+  - changeSet:
+      id: 2
+      author: AndreyTarasov
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            - tableExists:
+                tableName: contact_info
+      changes:
+        - createTable:
+            tableName: contact_info
+            schemaName: public
+            columns:
+              - column:
+                  name: id
+                  type: int
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: client_id
+                  type: int
+                  constraints:
+                    nullable: false
+                    foreignKeyName: fk_contact_info
+                    references: client(id)
+              - column:
+                  name: type
+                  type: varchar2(20)
+                  constraints:
+                    nullable: false
+              - column:
+                  name: contact
+                  type: varchar2(100)
+                  constraints:
+                    nullable: false
+  - changeSet:
+      id: 3
+      author: AndreyTarasov
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            - sequenceExists:
+                sequenceName: client_id_seq
+      changes:
+        - createSequence:
+            sequenceName: client_id_seq
+            schemaName: public
+            startValue: 1
+            incrementBy: 1
+  - changeSet:
+      id: 4
+      author: AndreyTarasov
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            - sequenceExists:
+                sequenceName: contact_info_id_seq
+      changes:
+        - createSequence:
+            sequenceName: contact_info_id_seq
+            schemaName: public
+            startValue: 1
+            incrementBy: 1
+  - changeSet:
+      id: 5
+      author: AndreyTarasov
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            - indexExists:
+                indexName: contact_info_client_id_fkey
+      changes:
+        - createIndex:
+            indexName: contact_info_client_id_fkey
+            schemaName: public
+            tableName: contact_info
+            unique: false
+            columns:
+              - column:
+                  name: client_id
+  - changeSet:
+      id: 6
+      author: AndreyTarasov
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            - indexExists:
+                indexName: contact_info_id_pkey
+      changes:
+        - createIndex:
+            indexName: contact_info_id_pkey
+            schemaName: public
+            tableName: contact_info
+            unique: true
+            columns:
+              - column:
+                  name: id
+  - changeSet:
+      id: 7
+      author: AndreyTarasov
+      preConditions:
+        - onFail: CONTINUE
+        - not:
+            - indexExists:
+                indexName: client_id_pkey
+      changes:
+        - createIndex:
+            indexName: client_id_pkey
+            schemaName: public
+            tableName: client
+            unique: true
+            columns:
+              - column:
+                  name: id

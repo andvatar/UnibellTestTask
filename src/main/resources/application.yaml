@@ -1,0 +1,20 @@
+spring:
+  jpa:
+    show-sql: true
+    open-in-view: false
+
+    hibernate:
+      ddl-auto: validate
+
+    properties:
+      hibernate:
+        format_sql: true
+        enable_lazy_load_no_trans: true
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/unibell
+    username: postgres
+    password: postgres
+
+  liquibase:
+    changeLog: "classpath:db/changelog.yaml"
